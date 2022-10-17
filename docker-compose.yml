@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+      target: development
+    command: npm run start:dev api
+    depends_on:
+      - analyzer
+      - communicator
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+  analyzer:
+    build:
+      context: .
+      dockerfile: ./apps/analyzer/Dockerfile
+      target: development
+    command: npm run start:dev analyzer
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3001'
+  communicator:
+    build:
+      context: .
+      dockerfile: ./apps/communicator/Dockerfile
+      target: development
+    command: npm run start:dev communicator
+    ports:
+      - '3002:3002'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules

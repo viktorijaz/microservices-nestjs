@@ -1,0 +1,39 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/api/src",
+  "monorepo": true,
+  "root": "apps/api",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/api/tsconfig.app.json"
+  },
+  "projects": {
+    "api": {
+      "type": "application",
+      "root": "apps/api",
+      "entryFile": "main",
+      "sourceRoot": "apps/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api/tsconfig.app.json"
+      }
+    },
+    "communicator": {
+      "type": "application",
+      "root": "apps/communicator",
+      "entryFile": "main",
+      "sourceRoot": "apps/communicator/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/communicator/tsconfig.app.json"
+      }
+    },
+    "analyzer": {
+      "type": "application",
+      "root": "apps/analyzer",
+      "entryFile": "main",
+      "sourceRoot": "apps/analyzer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/analyzer/tsconfig.app.json"
+      }
+    }
+  }
+}
