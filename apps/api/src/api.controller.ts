@@ -20,6 +20,11 @@ export class ApiController {
   getAnalytics() {
     return this.apiService.getAnalytics();
   }
+
+  @Get('communicator')
+  getCommunicator() {
+    return this.apiService.getCommunicator();
+  }
 }
 
 

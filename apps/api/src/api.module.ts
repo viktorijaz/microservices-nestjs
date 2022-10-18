@@ -14,7 +14,9 @@ import { ApiService } from './api.service';
       {
         name: 'ANALYTICS',
         transport: Transport.TCP,
-        options: { port: 3001 },
+        options: {
+          host: 'analyzer', port: 5000
+        },
       },
     ]),
   ],

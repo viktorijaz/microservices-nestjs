@@ -4,13 +4,15 @@ import { AnalyzerModule } from './analyzer.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AnalyzerModule);
-  app.connectMicroservice({
+  const myMicro = app.connectMicroservice({
     transport: Transport,
     options: {
-      port: 3001,
+      host: 'analyzer',
+      port: 5000
     },
   });
   await app.startAllMicroservices();
   await app.listen(3001);
+  await myMicro.listen();
 }
 bootstrap();

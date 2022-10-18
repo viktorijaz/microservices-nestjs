@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build analyzer
 
 FROM node:14.18.0-alpine as production
 

@@ -5,6 +5,7 @@ services:
       dockerfile: ./apps/api/Dockerfile
       target: development
     command: npm run start:dev api
+    hostname: api
     depends_on:
       - analyzer
       - communicator
@@ -19,17 +20,21 @@ services:
       dockerfile: ./apps/analyzer/Dockerfile
       target: development
     command: npm run start:dev analyzer
+    hostname: analyzer
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-    ports:
-      - '3001:3001'
+    expose:
+      - '3001'
+      - '3003'
+      - '5000'
   communicator:
     build:
       context: .
       dockerfile: ./apps/communicator/Dockerfile
       target: development
     command: npm run start:dev communicator
+    hostname: communicator
     ports:
       - '3002:3002'
     volumes:

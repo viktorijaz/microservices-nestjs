@@ -1,9 +1,10 @@
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserEvent } from './create-user.event';
 
 @Injectable()
 export class AnalyzerService {
+  private readonly logger = new Logger(AnalyzerService.name);
 
   private readonly analytics: any[] = [];
   getHello(): string {
@@ -11,7 +12,7 @@ export class AnalyzerService {
   }
 
   handleUserCreated(data: CreateUserEvent) {
-    console.log('handlerUserCreated - ANALYTICS', data);
+    this.logger.log('handlerUserCreated - ANALYTICS', data);
     this.analytics.push({
       email: data.email,
       timestamp: new Date(),
@@ -19,6 +20,7 @@ export class AnalyzerService {
   }
 
   getAnalytics() {
+    this.logger.log('getAnalytics - ANALYTICS');
     return this.analytics;
   }
 }
