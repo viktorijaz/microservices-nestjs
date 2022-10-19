@@ -12,7 +12,7 @@ import { ApiService } from './api.service';
       validationSchema: Joi.object({
         COMMUNICATOR_PORT: Joi.number().required(),
         COMMUNICATOR_HOST: Joi.string().required(),
-        ANALYZER_PORT: Joi.number().required(),
+        ANALYZER_PORT_TCP: Joi.number().required(),
         ANALYZER_HOST: Joi.string().required(),
       }),
       envFilePath: './.env',
@@ -35,7 +35,7 @@ import { ApiService } from './api.service';
         useFactory: async (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            port: configService.get<number>('ANALYZER_PORT'),
+            port: configService.get<number>('ANALYZER_PORT_TCP'),
             host: configService.get<string>('ANALYZER_HOST')
           }
         }
