@@ -7,6 +7,8 @@ services:
     command: npm run start:dev api
     hostname: api
     depends_on:
+      - postgres
+      - pgadmin
       - analyzer
       - communicator
     volumes:
@@ -14,6 +16,25 @@ services:
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
+  posts:
+    build:
+      context: .
+      dockerfile: ./apps/posts/Dockerfile
+      target: development
+    command: npm run start:dev posts
+    hostname: posts
+    depends_on:
+      - postgres
+      - pgadmin
+      - analyzer
+      - communicator
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3003:3003'
+    networks:
+      - postgres
   analyzer:
     build:
       context: .
@@ -26,7 +47,6 @@ services:
       - /usr/src/app/node_modules
     expose:
       - '3001'
-      - '3003'
       - '5000'
   communicator:
     build:
@@ -40,3 +60,32 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - /data/postgres:/data/postgres
+    env_file:
+      - docker.env
+    networks:
+      - postgres
+  pgadmin:
+    links:
+      - postgres:postgres
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - "8080:80"
+    volumes:
+      - /data/pgadmin:/root/.pgadmin
+    env_file:
+      - docker.env
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
