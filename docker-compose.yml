@@ -16,6 +16,23 @@ services:
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    hostname: auth
+    depends_on:
+      - postgres
+      - pgadmin
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3004:3004'
+    networks:
+      - postgres
   posts:
     build:
       context: .
